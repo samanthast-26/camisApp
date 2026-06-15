@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 
-const uri = 'mongodb://localhost:27017';
+const uri = 'mongodb+srv://samcita:clavecita26@cluster0.v0beqat.mongodb.net/?appName=Cluster0';
 
 const client = new MongoClient(uri);
 
@@ -10,7 +10,7 @@ async function run() {
 
     await client.db("admin").command({ ping: 1 });
 
-    console.log("MongoDB local conectado correctamente");
+    console.log("MongoDB en la nube conectado correctamente");
 
   } finally {
     await client.close();
