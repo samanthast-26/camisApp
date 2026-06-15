@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "App de diseño de camisetas con votación",
   "main": "index.js",
-  "scripts": {
+    "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "vercel-build": "echo 'No build step required'"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

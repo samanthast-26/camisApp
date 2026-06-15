@@ -440,3 +440,8 @@ app.get('/api/verificar', verificarToken, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+// Borra o comenta esto:
+// app.listen(PORT, () => { ... });
+
+// Agrega esto obligatoriamente en la última línea:
+module.exports = app;
