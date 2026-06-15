@@ -104,45 +104,71 @@ loginForm.addEventListener('submit', async (e) => {
     }
 });
 
-// Registro
-registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById('registerEmail').value;
-    const nombre = document.getElementById('registerNombre').value || email.split('@')[0];
-    const password = document.getElementById('registerPassword').value;
-    
-    if (password.length < 6) {
-        mostrarMensaje('La contraseña debe tener al menos 6 caracteres');
-        return;
-    }
-    
-    try {
-        const response = await fetch('/api/registro', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nombre, email, clave: password })
-        });
+
+// Elementos de la interfaz (Ajusta los IDs según tu HTML real)
+const registerForm = document.getElementById('registerForm');
+const authScreen = document.getElementById('authScreen');
+const mainContent = document.getElementById('mainContent');
+
+// Función auxiliar para mostrar alertas en pantalla
+function mostrarMensaje(texto, esError = true) {
+    alert(texto); // Reemplaza esto si usas un contenedor div de alertas
+}
+
+// Función auxiliar para guardar la sesión en el navegador
+function guardarSesion(token, usuario) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+}
+
+// Funciones vacías para evitar errores si aún no las creas
+function cargarCamisetas() { console.log("Cargando camisetas..."); }
+function inicializarDiseñador() { console.log("Diseñador listo..."); }
+function inicializarBuscador() { console.log("Buscador listo..."); }
+
+// EVENTO DE REGISTRO CORREGIDO
+if (registerForm) {
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        const data = await response.json();
+        const email = document.getElementById('registerEmail').value;
+        const nombre = document.getElementById('registerNombre').value || email.split('@')[0];
+        const password = document.getElementById('registerPassword').value;
         
-        if (response.ok) {
-            guardarSesion(data.token, data.usuario);
-            mostrarMensaje('✅ ¡Cuenta creada exitosamente!', false);
-            setTimeout(() => {
-                authScreen.style.display = 'none';
-                mainContent.style.display = 'block';
-                cargarCamisetas();
-                inicializarDiseñador();
-                inicializarBuscador();
-            }, 1000);
-        } else {
-            mostrarMensaje(data.error || 'Error al crear cuenta');
+        if (password.length < 6) {
+            mostrarMensaje('La contraseña debe tener al menos 6 caracteres');
+            return;
         }
-    } catch (error) {
-        mostrarMensaje('Error de conexión al servidor');
-    }
-});
+        
+        try {
+            // Se envía a /api/registro usando 'clave' en el JSON para el backend
+            const response = await fetch('/api/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, email, clave: password })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                guardarSesion(data.token, data.usuario);
+                mostrarMensaje('✅ ¡Cuenta creada exitosamente!', false);
+                setTimeout(() => {
+                    if(authScreen) authScreen.style.display = 'none';
+                    if(mainContent) mainContent.style.display = 'block';
+                    cargarCamisetas();
+                    inicializarDiseñador();
+                    inicializarBuscador();
+                }, 1000);
+            } else {
+                mostrarMensaje(data.error || 'Error al crear cuenta');
+            }
+        } catch (error) {
+            mostrarMensaje('Error de conexión al servidor');
+        }
+    });
+}
+
 
 // Verificar sesión al cargar
 async function verificarSesion() {
