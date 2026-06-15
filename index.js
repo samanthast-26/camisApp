@@ -394,34 +394,40 @@ app.post('/api/registro', async (req, res) => {
   }
 });
 
-// Login de usuario (autenticación) - NUEVA RUTA
+// ==========================
+// RUTA DE LOGIN (AÑADIR A TU INDEX.JS)
+// ==========================
 app.post('/api/login', async (req, res) => {
   try {
     const { email, clave } = req.body;
-    
-    // 1. Buscar al usuario por email
+
+    // 1. Buscar si el usuario existe
     const usuario = await Usuario.findOne({ email });
     if (!usuario) {
-      return res.status(401).json({ error: 'Credenciales inválidas' });
+      return res.status(400).json({ error: 'Usuario o contraseña incorrectos' });
     }
-    // 2. Verificar la contraseña con bcrypt.compare
-    const passwordOk = await bcrypt.compare(clave, usuario.clave);
-    if (!passwordOk) {
-      return res.status(401).json({ error: 'Credenciales inválidas' });
+
+    // 2. Comprobar la contraseña (asumiendo que usas bcrypt en tu esquema al guardar)
+    // Si guardas las claves en texto plano temporalmente, usa: if (usuario.clave !== clave)
+    const claveValida = await bcrypt.compare(clave, usuario.clave);
+    if (!claveValida) {
+      return res.status(400).json({ error: 'Usuario o contraseña incorrectos' });
     }
-    
-    // 3. Credenciales válidas: Generar token JWT
+
+    // 3. Generar el Token de acceso JWT
     const token = jwt.sign({ id: usuario._id }, JWT_SECRET, { expiresIn: '24h' });
-    
-    // 4. Enviar el token al cliente
-    res.json({ 
+
+    res.json({
+      mensaje: 'Inicio de sesión correcto',
       token,
-      usuario: { id: usuario._id, email: usuario.email, nombre: usuario.nombre }
+      usuario: { id: usuario._id, nombre: usuario.nombre, email: usuario.email }
     });
+
   } catch (error) {
-    res.status(500).json({ error: 'Error en el servidor' });
+    res.status(500).json({ error: 'Error interno en el servidor de login' });
   }
 });
+
 
 // Verificar token (mantener sesión) - NUEVA RUTA
 app.get('/api/verificar', verificarToken, async (req, res) => {
