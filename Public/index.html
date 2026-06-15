@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseña tu Camiseta - Creative Tee</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- PANTALLA DE LOGIN/REGISTRO (PRIMERO) -->
+    <div id="authScreen" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>¡A diseñar!</h1>
+                <p>Diseña camisetas únicas</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">Iniciar Sesión</button>
+                <button class="tab-btn" data-tab="register">Crear Cuenta</button>
+            </div>
+
+            <!-- Formulario de Login -->
+            <form id="loginForm" class="auth-form active">
+                <div class="input-group">
+                    <label>📧Email</label>
+                    <input type="email" id="loginEmail" placeholder="tu@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label>🔒 Contraseña</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="auth-btn">Ingresar</button>
+            </form>
+
+            <!-- Formulario de Registro -->
+            <form id="registerForm" class="auth-form">
+                <div class="input-group">
+                    <label>📧 Email</label>
+                    <input type="email" id="registerEmail" placeholder="tu@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label>👤 Nombre</label>
+                    <input type="text" id="registerNombre" placeholder="Tu nombre">
+                </div>
+                <div class="input-group">
+                    <label>🔒 Contraseña</label>
+                    <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <button type="submit" class="auth-btn">Crear Cuenta</button>
+            </form>
+
+            <div id="authMessage" class="auth-message"></div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL (PROTEGIDO) - TU DISEÑO ORIGINAL -->
+    <div id="mainContent" style="display: none;">
+        <header>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+                <div>
+                    <h1>Diseña tu Camiseta</h1>
+                    <p>Personaliza colores y comparte tus creaciones</p>
+                </div>
+                <button id="logoutBtn" style="background: rgba(255,255,255,0.3); border: 2px solid white; color: white; padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 600;">Cerrar Sesión</button>
+            </div>
+        </header>
+
+        <div class="contenedor">
+            <div class="area-superior">
+                <!-- Panel de diseño -->
+                <div class="panel-diseno">
+                    <h2>Personaliza tu camisa</h2>
+                    <div class="formulario">
+                        <label>Nombre del diseño</label>
+                        <input type="text" id="nombreDiseno" placeholder="Ej: Atardecer Rosa">
+
+                        <label>👤 Autor</label>
+                        <input type="text" id="autor" placeholder="Tu nombre">
+
+                        <label>Seleccionar color</label>
+                        <input type="color" id="colorPicker" value="#ff69b4">
+
+                        <div id="parteActual">Selecciona una parte de la camisa</div>
+
+                        <button id="btnGuardar"> Guardar diseño</button>
+                        <button id="btnLimpiar">🔄 Reiniciar colores</button>
+                    </div>
+                </div>
+
+                <section class="camiseta-preview">
+
+
+ <svg id="camisetaSvg" viewBox="0 0 500 520">
+
+
+     <ellipse
+        cx="250"
+        cy="470"
+        rx="120"
+        ry="25"
+        fill="rgba(0,0,0,0.15)"
+    />
+
+    <!-- Manga izquierda -->
+    <path
+        id="mangaIzquierda"
+        class="parte-camiseta"
+        d="M130 120 L40 180 L80 280 L160 240 Z"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="5"
+    />
+
+    <!-- Puño manga izquierda -->
+    <path
+    id="bordeMangaIzquierda"
+    class="parte-camiseta"
+    d="
+    M80 280
+    L160 240
+    L155 232
+    L75 272
+    Z"
+    fill="white"
+    stroke="#4c1d95"
+    stroke-width="2"
+/>
+
+    <!-- Manga derecha -->
+    <path
+        id="mangaDerecha"
+        class="parte-camiseta"
+        d="M370 120 L460 180 L420 280 L340 240 Z"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="5"
+    />
+
+    <!-- Puño manga derecha -->
+    <path
+    id="bordeMangaDerecha"
+    class="parte-camiseta"
+    d="
+    M340 240
+    L420 280
+    L425 272
+    L345 232
+    Z"
+    fill="white"
+    stroke="#4c1d95"
+    stroke-width="2"
+/>
+
+    <!-- Torso -->
+    <path
+        id="torso"
+        class="parte-camiseta"
+        d="M150 120
+           Q250 190 350 120
+           L390 430
+           Q250 485 110 430 Z"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="5"
+    />
+
+    <!-- Franja inferior -->
+    <path
+        id="bordeInferior"
+        class="parte-camiseta"
+        d="
+        M115 415
+        Q250 465 385 415
+        L382 430
+        Q250 480 118 430
+        Z"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="2"
+    />
+
+    <!-- Solapa izquierda -->
+    <polygon
+        id="solapaIzquierda"
+        class="parte-camiseta"
+        points="185,105 250,155 220,185 165,125"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="3"
+    />
+
+    <!-- Solapa derecha -->
+    <polygon
+        id="solapaDerecha"
+        class="parte-camiseta"
+        points="315,105 250,155 280,185 335,125"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="3"
+    />
+
+    <!-- Cuello -->
+    <path
+        id="cuello"
+        class="parte-camiseta"
+        d="
+        M185 118
+        Q250 185 315 118
+        Q250 145 185 118
+        Z"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="4"
+    />
+
+    <!-- Tapeta -->
+    <rect
+        id="tapeta"
+        class="parte-camiseta"
+        x="240"
+        y="150"
+        width="20"
+        height="55"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="2"
+        rx="2"
+    />
+
+    <!-- Botones -->
+    <circle cx="250" cy="165" r="3" fill="#4c1d95"/>
+    <circle cx="250" cy="182" r="3" fill="#4c1d95"/>
+    <circle cx="250" cy="199" r="3" fill="#4c1d95"/>
+
+    <!-- Bolsillo -->
+    <path
+        id="bolsillo"
+        class="parte-camiseta"
+        d="
+        M290 190
+        L345 190
+        L345 245
+        L317 260
+        L290 245
+        Z"
+        fill="white"
+        stroke="#4c1d95"
+        stroke-width="3"
+    />
+</svg>
+
+    </section>
+
+            </div>
+
+            
+            <div class="lista-disenos">
+                <div class="buscador-disenos">
+    <h2>Mis Diseños</h2>
+    <div class="barra-busqueda">
+        <input type="text" id="buscadorInput" placeholder="🔍 Buscar diseño por nombre..." class="input-buscar">
+        <button id="btnBuscar" class="btn-buscar">Buscar</button>
+        <button id="btnLimpiarBusqueda" class="btn-limpiar-busqueda">Mostrar todos</button>
+    </div>
+</div>
+<div id="contenedorCamisetas">
+    <p class="mensaje-vacio">Cargando diseños...</p>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

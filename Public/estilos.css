@@ -1,0 +1,734 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top left, #ffd6e7 0%, transparent 40%),
+                radial-gradient(circle at top right, #c7f0ff 0%, transparent 35%),
+                radial-gradient(circle at bottom, #ffe4f1 0%, transparent 40%),
+                linear-gradient(135deg, #fff7fb, #fce7f3, #abddfa);
+    min-height: 100vh;
+    color: #ffffff;
+}
+
+header {
+    width: 100%;
+    padding: 30px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #f8afcd, #fab5d7, #abddfa);
+    border-radius: 0 0 40px 40px;
+    box-shadow: 0 10px 30px rgba(255, 183, 213, .35);
+}
+
+header h1 {
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+}
+
+header p {
+    color: white;
+    opacity: .95;
+}
+
+.contenedor {
+    width: 95%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+.area-superior {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.panel-diseno,
+.camiseta-preview,
+.lista-disenos {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .65);
+    backdrop-filter: blur(25px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, .9);
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(255, 183, 213, .20);
+    transition: .35s;
+}
+
+.panel-diseno:hover,
+.camiseta-preview:hover,
+.lista-disenos:hover {
+    transform: translateY(-5px);
+}
+
+.panel-diseno::before,
+.camiseta-preview::before,
+.lista-disenos::before {
+    content: "🫧";
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    font-size: 2rem;
+    opacity: .25;
+}
+
+.panel-diseno::after,
+.camiseta-preview::after,
+.lista-disenos::after {
+    content: "🫧";
+    position: absolute;
+    bottom: 12px;
+    right: 15px;
+    font-size: 2rem;
+    opacity: .25;
+}
+
+.panel-diseno h2,
+.lista-disenos h2 {
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(100deg, #ff69b4, #87cefa, #87cefa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.formulario label {
+    font-weight: 600;
+    color: #c2185b;
+}
+
+.formulario input[type="text"] {
+    padding: 15px;
+    border-radius: 18px;
+    border: none;
+    background: white;
+    color: #6a0572;
+    font-size: 1rem;
+    outline: none;
+    transition: .3s;
+}
+
+.formulario input[type="text"]:focus {
+    box-shadow: 0 0 0 4px rgba(255, 183, 213, .4);
+    transform: scale(1.02);
+}
+
+.formulario input[type="color"] {
+    width: 100%;
+    height: 65px;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    background: none;
+}
+
+#parteActual {
+    background: white;
+    padding: 14px;
+    border-radius: 14px;
+    text-align: center;
+    color: #d63384;
+    font-weight: 600;
+}
+
+button {
+    padding: 15px;
+    border: none;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#btnGuardar {
+    background: linear-gradient(135deg, #ffb7d5, #ff8ec7, #f9a8d4);
+    color: white;
+}
+
+#btnGuardar:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(255, 183, 213, .5);
+}
+
+#btnLimpiar {
+    background: linear-gradient(135deg, #c7f0ff, #8fd8ff, #7dd3fc);
+    color: white;
+}
+
+#btnLimpiar:hover {
+    transform: translateY(-4px) scale(1.03);
+}
+
+.camiseta-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#camisetaSvg {
+    width: 100%;
+    max-width: 430px;
+    animation: flotar 4s ease-in-out infinite;
+    filter: drop-shadow(0 15px 25px rgba(255, 183, 213, .35));
+}
+
+@keyframes flotar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.parte-camiseta {
+    cursor: pointer;
+    transition: .3s;
+}
+
+.parte-camiseta:hover {
+    stroke: #ff8ec7;
+}
+
+.parte-activa {
+    stroke: #ff8ec7 !important;
+    stroke-width: 7;
+}
+
+.lista-disenos {
+    width: 100%;
+}
+
+#contenedorCamisetas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.tarjeta-camiseta {
+    position: relative;
+    background: linear-gradient(145deg, #ffd6e7, #ffcfe7, #c7f0ff);
+    border-radius: 24px;
+    padding: 20px;
+    color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(255, 183, 213, .25);
+    transition: .35s;
+}
+
+.tarjeta-camiseta::before {
+    content: "🫧";
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.8rem;
+    opacity: .4;
+}
+
+.tarjeta-camiseta:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.tarjeta-camiseta h3 {
+    margin-bottom: 10px;
+    color: #c2185b;
+}
+
+.tarjeta-camiseta p {
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.mini-camisa {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.color-box {
+    width: 35px;
+    height: 35px;
+    border-radius: 12px;
+    border: 2px solid white;
+}
+
+.mensaje-vacio {
+    text-align: center;
+    color: #d63384;
+    font-weight: 600;
+    padding: 30px;
+}
+
+.estrellas {
+    display: flex;
+    gap: 8px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.estrellas button {
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #c2185b;
+    font-size: 0.8rem;
+    border-radius: 20px;
+}
+
+.estrellas button:hover {
+    background: #ffd700;
+    transform: scale(1.05);
+}
+
+.btn-eliminar {
+    margin-top: 10px;
+    background: rgba(220, 53, 69, 0.8);
+    color: white;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.btn-eliminar:hover {
+    background: #dc3545;
+    transform: scale(1.02);
+}
+
+@media (max-width: 900px) {
+    .area-superior {
+        grid-template-columns: 1fr;
+    }
+    header h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* ========== ESTILOS DEL LOGIN ========== */
+.auth-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top left, #ffd6e7 0%, transparent 40%),
+                radial-gradient(circle at top right, #c7f0ff 0%, transparent 35%),
+                linear-gradient(135deg, #fff7fb, #fce7f3, #abddfa);
+    z-index: 1000;
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(25px);
+    border-radius: 40px;
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 25px 50px rgba(255, 183, 213, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(100deg, #ff69b4, #87cefa, #87cefa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    color: #c2185b;
+    font-weight: 500;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 60px;
+    padding: 5px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #c2185b;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #ffb7d5, #ff8ec7);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 141, 199, 0.3);
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #c2185b;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 20px;
+    background: white;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.3s;
+    outline: none;
+}
+
+.input-group input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 183, 213, 0.5);
+    transform: scale(1.02);
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ffb7d5, #ff8ec7);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 141, 199, 0.4);
+}
+
+.auth-message {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    min-height: 40px;
+}
+/* Estilos para los botones de acción */
+.botones-accion {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.btn-editar-colores {
+    flex: 1;
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-editar-colores:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+}
+
+.btn-editar {
+    flex: 1;
+    background: linear-gradient(135deg, #ffb7d5, #59c2f3, #c5e6f5);
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0;
+}
+
+.btn-eliminar {
+    flex: 1;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0;
+}
+
+.btn-eliminar:hover {
+    background: #dc3545;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* Ajuste para que los botones dentro de la tarjeta sean iguales */
+.tarjeta-camiseta .btn-editar-colores,
+.tarjeta-camiseta .btn-eliminar {
+    width: 50px;
+    display: inline-block;
+}
+.tarjeta-camiseta button {
+    min-width: 120px;
+    width: auto;
+    padding: 10px 15px;
+}
+
+/* Contenedor flex para los botones de acción */
+.tarjeta-camiseta .botones-accion {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.tarjeta-camiseta .botones-accion button {
+    flex: 1;
+    margin: 0;
+}
+
+/* Ajustes específicos para mantener proporciones */
+.btn-editar-colores,
+.btn-eliminar {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Para móviles */
+@media (max-width: 480px) {
+    .tarjeta-camiseta button {
+        min-width: 100px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+    
+    .btn-editar-colores,
+    .btn-eliminar {
+        white-space: normal;
+        word-break: keep-all;
+    }
+    }
+    .buscador-disenos {
+    margin-bottom: 20px;
+}
+
+.barra-busqueda {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.input-buscar {
+    flex: 1;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-buscar:focus {
+    box-shadow: 0 0 0 3px rgba(255, 183, 213, 0.5);
+    transform: scale(1.02);
+}
+
+.btn-buscar {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.btn-buscar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-limpiar-busqueda {
+    background: linear-gradient(135deg, #868f96, #596164);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.btn-limpiar-busqueda:hover {
+    transform: translateY(-2px);
+}
+/* Estilos del buscador */
+.buscador-disenos {
+    margin-bottom: 20px;
+}
+
+.barra-busqueda {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.input-buscar {
+    flex: 1;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-buscar:focus {
+    box-shadow: 0 0 0 3px rgba(255, 183, 213, 0.5);
+    transform: scale(1.02);
+}
+
+.btn-buscar {
+    background: linear-gradient(135deg, #fd96d6, #a9eeff);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-buscar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(147, 212, 255, 0.979);
+}
+
+.btn-limpiar-busqueda {
+    background: linear-gradient(135deg, #a1d6ff, #f7a2d4);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-limpiar-busqueda:hover {
+    transform: translateY(-2px);
+}
+
+.botones-accion {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.btn-editar-colores {
+    flex: 1;
+    background: linear-gradient(135deg, #f5a4dc, #f856c2);
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-editar-colores:hover {
+    transform: translateY(-2px);
+}
+
+.btn-eliminar {
+    flex: 1;
+    background: rgba(137, 214, 245, 0.9);
+    color: white;
+    padding: 10px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 0;
+}
+
+.btn-eliminar:hover {
+    background: #dc3545;
+    transform: translateY(-2px);
+}
+
+.resultado-busqueda {
+    background: linear-gradient(135deg, #f5a4dc, #a6e5f8);
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #4a5568;
+    font-weight: 600;
+}
